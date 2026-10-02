@@ -1,0 +1,42 @@
+# TODO: Adjust the branch pattern, platforms, and platform-flag for your SDK.
+#
+# Branch patterns:
+#   "[0-9]+"         — major-only branches (e.g., 20, 22, 24)
+#   "main"  — major.minor branches (e.g., 1.24, 7.1)
+#
+# Platforms:
+#   Single-base (build-base in sdkcraft.yaml):
+#     '["amd64"]'
+#     '["amd64","arm64","riscv64"]'
+#   Multi-base (no build-base, multiple ubuntu@ entries in platforms):
+#     '["ubuntu@22.04:amd64","ubuntu@24.04:amd64"]'
+#
+# Platform flag:
+#   --build-for  (default) — for single-base SDKs
+#   --platform             — for multi-base SDKs
+
+name: Build and Upload SDK
+
+on:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch name (e.g., 1.0)"
+        required: true
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-upload:
+    uses: canonical/sdkcraft-actions/.github/workflows/upload.yml@main
+    with:
+      platforms: '\["ubuntu@22.04:amd64","ubuntu@24.04:amd64","ubuntu@26.04:amd64","ubuntu@22.04:arm64","ubuntu@24.04:arm64","ubuntu@26.04:arm64"\]'
+      platform-flag: "--platform" # default value, can also be --platform for multi-base SDKs
+    secrets:
+      SDKCRAFT_STORE_CREDENTIALS: ${{ secrets.SDKCRAFT_STORE_CREDENTIALS_STAGING }}

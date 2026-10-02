@@ -1,0 +1,41 @@
+name: herdr
+adopt-info: herdr
+summary: Herdr — the runtime your coding agents live on
+description: |
+  This SDK provides herdr, a terminal multiplexer for AI coding agents.
+  It enables agents to manage panes, persist sessions across disconnects,
+  and provides a socket API for agent automation and state tracking.
+license: Apache-2.0
+website: https://github.com/bschimke95/herdr-workshop-sdk
+platforms:
+  ubuntu@22.04:amd64:
+  ubuntu@24.04:amd64:
+  ubuntu@26.04:amd64:
+  ubuntu@22.04:arm64:
+    build-on: [ubuntu@22.04:amd64]
+    build-for: [ubuntu@22.04:arm64]
+  ubuntu@24.04:arm64:
+    build-on: [ubuntu@24.04:amd64]
+    build-for: [ubuntu@24.04:arm64]
+  ubuntu@26.04:arm64:
+    build-on: [ubuntu@26.04:amd64]
+    build-for: [ubuntu@26.04:arm64]
+
+parts:
+  herdr:
+    plugin: dump
+    source: .
+    source-type: local
+    override-pull: |
+      VERSION=$(cat "$CRAFT_PROJECT_DIR/VERSION")
+      craftctl set version="$VERSION"
+      case "$CRAFT_ARCH_BUILD_FOR" in
+        amd64) ASSET=herdr-v${VERSION}-x86_64-unknown-linux-gnu.tar.gz ;;
+        arm64) ASSET=herdr-v${VERSION}-aarch64-unknown-linux-gnu.tar.gz ;;
+        *) echo "unsupported arch: $CRAFT_ARCH_BUILD_FOR" >&2; exit 1 ;;
+      esac
+      curl -fLO "https://github.com/herdrdev/herdr/releases/download/v${VERSION}/${ASSET}"
+      tar xzf "$ASSET" herdr
+      chmod +x herdr
+    organize:
+      herdr: bin/herdr

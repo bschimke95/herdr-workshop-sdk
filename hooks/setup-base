@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+cat <<INNER_EOF >/etc/profile.d/herdr.sh
+export PATH="${SDK}/bin:\$PATH"
+INNER_EOF
