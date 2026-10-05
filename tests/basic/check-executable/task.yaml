@@ -1,3 +1,10 @@
 summary: Check herdr is executable
 execute: |
-  herdr --version
+  set +u
+  SDK_FILE=$(find /root/ -name "*.sdk" -type f | head -n 1)
+  echo "Testing SDK file: $SDK_FILE"
+  mkdir -p payload
+  pushd payload
+  tar -xf "$SDK_FILE"
+  ./bin/herdr --version
+  popd
