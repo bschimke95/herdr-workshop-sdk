@@ -1,0 +1,3 @@
+summary: Check herdr is executable
+execute: |
+  herdr --version
