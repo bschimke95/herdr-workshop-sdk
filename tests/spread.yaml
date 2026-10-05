@@ -1,0 +1,12 @@
+project: herdr
+path: /root/herdr
+backends:
+  lxd:
+    systems:
+      - ubuntu-24.04-64:
+          image: ubuntu:24.04
+suites:
+  basic/:
+    summary: Basic tests for herdr SDK
+    systems:
+      - ubuntu-24.04-64
