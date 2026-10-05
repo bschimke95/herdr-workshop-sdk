@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   forward-port:
+    if: vars.LONG_TERM_BRANCHES != '' && vars.LONG_TERM_BRANCHES != '[]'
     uses: canonical/sdkcraft-actions/.github/workflows/forward-port.yml@main
     with:
       long-term-branches: ${{ vars.LONG_TERM_BRANCHES }}
