@@ -30,12 +30,11 @@ parts:
       VERSION=$(cat "$CRAFT_PROJECT_DIR/VERSION")
       craftctl set version="$VERSION"
       case "$CRAFT_ARCH_BUILD_FOR" in
-        amd64) ASSET=herdr-v${VERSION}-x86_64-unknown-linux-gnu.tar.gz ;;
-        arm64) ASSET=herdr-v${VERSION}-aarch64-unknown-linux-gnu.tar.gz ;;
+        amd64) ASSET=herdr-linux-x86_64 ;;
+        arm64) ASSET=herdr-linux-aarch64 ;;
         *) echo "unsupported arch: $CRAFT_ARCH_BUILD_FOR" >&2; exit 1 ;;
       esac
-      curl -fLO "https://github.com/herdrdev/herdr/releases/download/v${VERSION}/${ASSET}"
-      tar xzf "$ASSET" herdr
+      curl -fL "https://github.com/herdrdev/herdr/releases/download/v${VERSION}/${ASSET}" -o herdr
       chmod +x herdr
     organize:
       herdr: bin/herdr
