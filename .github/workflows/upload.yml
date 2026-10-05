@@ -36,6 +36,7 @@ jobs:
   build-and-upload:
     uses: canonical/sdkcraft-actions/.github/workflows/upload.yml@main
     with:
+      runs-on: '["ubuntu-24.04"]'
       platforms: '["ubuntu@22.04:amd64","ubuntu@24.04:amd64","ubuntu@26.04:amd64","ubuntu@22.04:arm64","ubuntu@24.04:arm64","ubuntu@26.04:arm64"]'
       platform-flag: "--platform" # default value, can also be --platform for multi-base SDKs
     secrets:
