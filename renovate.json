@@ -15,6 +15,7 @@
       ],
       "depNameTemplate": "herdrdev/herdr",
       "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
       "versioningTemplate": "semver"
     }
   ],
