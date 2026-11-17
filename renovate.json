@@ -15,6 +15,7 @@
       ],
       "depNameTemplate": "herdrdev/herdr",
       "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
       "versioningTemplate": "semver"
     }
   ],
@@ -24,8 +25,7 @@
   "packageRules": [
     {
       "matchPackageNames": ["herdrdev/herdr"],
-      "matchBaseBranches": ["main"],
-      "allowedVersions": "/^0\\./"
+      "matchBaseBranches": ["main"]
     }
   ]
 }
