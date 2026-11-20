@@ -1,0 +1,7 @@
+#!/bin/bash
+set -euo pipefail
+
+# `herdr --skill` prints the SKILL.md bundled with this exact herdr release,
+# so the skill always matches the installed binary version.
+mkdir -p ~/.agents/skills/herdr
+"$SDK/bin/herdr" --skill >~/.agents/skills/herdr/SKILL.md
